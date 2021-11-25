@@ -9,7 +9,7 @@ const MovieList = (props) => {
 
           <div class="img__wrap">
             <img class="img__img" src={movie.Poster} alt='movie' width="300" height="400"/>
-            <p class="img__description">After Homer pollutes the town's water supply, Springfield is encased in a gigantic dome by the EPA and the Simpsons are declared fugitives.</p>
+            <p class="img__description">{props.descriptions[index]}</p>
           </div>
 
         </div>

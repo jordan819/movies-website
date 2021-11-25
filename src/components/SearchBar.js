@@ -6,6 +6,8 @@ const SearchBar = (props) => {
         <input
           className='form-control'
           placeholder='Search a movie'
+          value={props.value}
+          onChange={(event) => props.setSearchValue(event.target.value)}
         ></input>
       </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import MovieList from './components/MovieList';
@@ -6,75 +6,69 @@ import Heading from './components/Heading';
 import SearchBar from './components/SearchBar'
 
 const App = () => {
-  const [movies, setMovies] = useState([
-    {
-        "Title": "The Lego Movie",
-        "Year": "2014",
-        "imdbID": "tt1490017",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BMTg4MDk1ODExN15BMl5BanBnXkFtZTgwNzIyNjg3MDE@._V1_SX300.jpg"
-    },
-    {
-        "Title": "The Simpsons Movie",
-        "Year": "2007",
-        "imdbID": "tt0462538",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BMTgxMDczMTA5N15BMl5BanBnXkFtZTcwMzk1MzMzMw@@._V1_SX300.jpg"
-    },
-    {
-        "Title": "Scary Movie",
-        "Year": "2000",
-        "imdbID": "tt0175142",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BMGEzZjdjMGQtZmYzZC00N2I4LThiY2QtNWY5ZmQ3M2ExZmM4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
-    },
-    {
-        "Title": "El Camino: A Breaking Bad Movie",
-        "Year": "2019",
-        "imdbID": "tt9243946",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BNjk4MzVlM2UtZGM0ZC00M2M1LThkMWEtZjUyN2U2ZTc0NmM5XkEyXkFqcGdeQXVyOTAzMTc2MjA@._V1_SX300.jpg"
-    },
-    {
-        "Title": "Scary Movie 2",
-        "Year": "2001",
-        "imdbID": "tt0257106",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BMzQxYjU1OTUtYjRiOC00NDg2LWI4MWUtZGU5YzdkYTcwNTBlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
-    },
-    {
-        "Title": "Bee Movie",
-        "Year": "2007",
-        "imdbID": "tt0389790",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BMjE1MDYxOTA4MF5BMl5BanBnXkFtZTcwMDE0MDUzMw@@._V1_SX300.jpg"
-    },
-    {
-        "Title": "Scary Movie 3",
-        "Year": "2003",
-        "imdbID": "tt0306047",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BNDE2NTIyMjg2OF5BMl5BanBnXkFtZTYwNDEyMTg3._V1_SX300.jpg"
-    },
-    {
-        "Title": "The Lego Batman Movie",
-        "Year": "2017",
-        "imdbID": "tt4116284",
-        "Type": "movie",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BMTcyNTEyOTY0M15BMl5BanBnXkFtZTgwOTAyNzU3MDI@._V1_SX300.jpg"
+  const [movies, setMovies] = useState([]);
+  const [moviesDescription, setMoviesDescription] = useState([]);
+  const [searchValue, setSearchValue] = useState('movie');
+
+  const getMoviesRequest = async (searchValue) => {
+    const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=88693566`;
+    const response = await fetch(url);
+    const responseJson = await response.json();
+
+    if (responseJson.Search) {
+
+      let validatedJson = [];
+
+      // films with no poster available will not be displayed
+      for (let i=0; i<responseJson.Search.length; i++) {
+        if (responseJson.Search[i].Poster !== 'N/A') {
+          validatedJson.push(responseJson.Search[i]);
+        }
+      }
+
+      getMoviesDescriptionRequest(validatedJson);
+
+      setMovies(validatedJson);
     }
-      ])
+
+  };
+
+  const getMoviesDescriptionRequest = async (movies) => {
+    let descriptions = [];
+
+    for (let i=0; i<movies.length; i++) {
+      let id = movies[i].imdbID;
+      let url = 'http://www.omdbapi.com/?i=' + id + '&apikey=88693566';
+      let response = await fetch(url);
+      let responseJson = await response.json();
+      descriptions.push(responseJson.Plot);
+    }
+
+    //movies.forEach(async (movie, i) => {
+    //  let id = movie.imdbID;
+    //  let url = 'http://www.omdbapi.com/?i=' + id + '&apikey=88693566';
+    //  let response = await fetch(url);
+    //  let responseJson = await response.json();
+    //  descriptions.push(responseJson.Plot);
+    // });
+    // console.log(descriptions);
+    setMoviesDescription(descriptions);
+  };
+
+  useEffect(() => {
+    getMoviesRequest(searchValue);
+  }, [searchValue])
 
   return (
     <div className='container-fluid movie-app'>
       <div className='d-flex align-items-center w-100 mt-4 mb-4'>
         <img src='./clapperboard.png' alt='logo' width="100" height="100"/>
         <Heading heading='MovieCave'/>
-        <SearchBar/>
-        <button type="submit" class="btn btn-secondary"><i class="bi-search"/> Search</button>
+        <SearchBar searchValue={searchValue} setSearchValue={setSearchValue}/>
+        <button type="submit" class="btn btn-secondary"><i className="bi-search"/> Search</button>
       </div>
       <div className="row">
-        <MovieList movies={movies}/>
+        <MovieList movies={movies} descriptions={moviesDescription}/>
       </div>
       <div>
 
