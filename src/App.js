@@ -3,7 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import MovieList from './components/MovieList';
 import Heading from './components/Heading';
-import SearchBar from './components/SearchBar'
+import SearchBar from './components/SearchBar';
+import Footer from './components/Footer';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -44,14 +45,6 @@ const App = () => {
       descriptions.push(responseJson.Plot);
     }
 
-    //movies.forEach(async (movie, i) => {
-    //  let id = movie.imdbID;
-    //  let url = 'http://www.omdbapi.com/?i=' + id + '&apikey=88693566';
-    //  let response = await fetch(url);
-    //  let responseJson = await response.json();
-    //  descriptions.push(responseJson.Plot);
-    // });
-    // console.log(descriptions);
     setMoviesDescription(descriptions);
   };
 
@@ -62,7 +55,7 @@ const App = () => {
   return (
     <div className='container-fluid movie-app'>
       <div className='d-flex align-items-center w-100 mt-4 mb-4'>
-        <img src='./clapperboard.png' alt='logo' width="100" height="100"/>
+        <img src='./logo.png' alt='logo' width="100" height="100"/>
         <Heading heading='MovieCave'/>
         <SearchBar searchValue={searchValue} setSearchValue={setSearchValue}/>
         <button type="submit" class="btn btn-secondary"><i className="bi-search"/> Search</button>
@@ -70,8 +63,8 @@ const App = () => {
       <div className="row">
         <MovieList movies={movies} descriptions={moviesDescription}/>
       </div>
-      <div>
-
+      <div className="row">
+        <Footer/>
       </div>
     </div>
   )
