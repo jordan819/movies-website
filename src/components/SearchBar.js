@@ -2,15 +2,13 @@ import React from 'react';
 
 const SearchBar = (props) => {
   return (
-    <div className='row'>
-      <div className='col-md-auto'>
-        <input className='form-control' placeholder='Search a movie'/>
+      <div className='col col-sm-4'>
+        <input
+          className='form-control'
+          placeholder='Search a movie'
+        ></input>
+      </div>
 
-      </div>
-      <div className='col-md-auto'>
-        <button type="submit" class="btn btn-secondary"><i class="bi-search"/> Search</button>
-      </div>
-    </div>
   );
 }
 
