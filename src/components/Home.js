@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import MovieList from './MovieList';
 import Heading from './Heading';
 import SearchBar from './SearchBar';
-import Footer from './Footer';
 
 import { Link } from "react-router-dom";
 
@@ -12,29 +11,6 @@ const Home = () => {
   const [movies, setMovies] = useState([]);
   const [moviesDescription, setMoviesDescription] = useState([]);
   const [searchValue, setSearchValue] = useState('movie');
-
-  const getMoviesRequest = async (searchValue) => {
-    const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=88693566`;
-    const response = await fetch(url);
-    const responseJson = await response.json();
-
-    if (responseJson.Search) {
-
-      let validatedJson = [];
-
-      // films with no poster available will not be displayed
-      for (let i=0; i<responseJson.Search.length; i++) {
-        if (responseJson.Search[i].Poster !== 'N/A') {
-          validatedJson.push(responseJson.Search[i]);
-        }
-      }
-
-      getMoviesDescriptionRequest(validatedJson);
-
-      setMovies(validatedJson);
-    }
-
-  };
 
   const getMoviesDescriptionRequest = async (movies) => {
     let descriptions = [];
@@ -51,6 +27,28 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const getMoviesRequest = async (searchValue) => {
+      const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=88693566`;
+      const response = await fetch(url);
+      const responseJson = await response.json();
+
+      if (responseJson.Search) {
+
+        let validatedJson = [];
+
+        // films with no poster available will not be displayed
+        for (let i=0; i<responseJson.Search.length; i++) {
+          if (responseJson.Search[i].Poster !== 'N/A') {
+            validatedJson.push(responseJson.Search[i]);
+          }
+        }
+
+        getMoviesDescriptionRequest(validatedJson);
+
+        setMovies(validatedJson);
+      }
+
+    };
     getMoviesRequest(searchValue);
   }, [searchValue]);
 

@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
 const Details = () => {
@@ -54,6 +54,7 @@ const Details = () => {
       <h2>Tytuł: {title}</h2>
       <h2>Wydano: {released}</h2>
       <h2>Czas trwania: {runtime}</h2>
+      <h2>Kategorie: {genre}</h2>
       <h2>Reżyser: {director}</h2>
       <h2>Aktorzy: {actors}</h2>
       <h2>Fabuła: {plot}</h2>
