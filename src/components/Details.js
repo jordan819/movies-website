@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
+import { Link } from "react-router-dom";
+import Heading from './Heading';
+
 const Details = () => {
 
   const {id} = useParams();
@@ -48,6 +51,11 @@ const Details = () => {
 
   return(
     <div style={{textAlign: 'center'}}>
+
+      <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }} className='d-flex align-items-center w-100 mt-4 mb-4'>
+        <Heading/>
+      </Link>
+
       <h2>Details</h2>
 
       <img src={poster} alt='movie'/>

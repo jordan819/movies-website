@@ -54,12 +54,14 @@ const Home = () => {
 
   return (
     <div>
-      <div className='d-flex align-items-center w-100 mt-4 mb-4'>
+      <div style={{paddingLeft: '40px', paddingRight: '50px'}} className='d-flex align-items-center w-100 mt-4 mb-4'>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }} className='d-flex align-items-center w-100 mt-4 mb-4'>
-
-          <Heading heading='MovieCave'/>
+          <Heading/>
         </Link>
         <SearchBar searchValue={searchValue} setSearchValue={setSearchValue}/>
+        <Link to="/add">
+          <button style={{backgroundColor: '#d30f0f', color: '#fff'}} type="submit" class="btn"><i class="bi bi-plus"></i></button>
+        </Link>
       </div>
       <div className="row">
         <MovieList movies={movies} descriptions={moviesDescription}/>
