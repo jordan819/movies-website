@@ -54,13 +54,18 @@ const Home = () => {
 
   return (
     <div>
-      <div style={{paddingLeft: '40px', paddingRight: '50px'}} className='d-flex align-items-center w-100 mt-4 mb-4'>
+      <div style={{paddingLeft: '40px', paddingRight: '50px'}} className='d-flex align-items-center w-100 mt-4'>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }} className='d-flex align-items-center w-100 mt-4 mb-4'>
           <Heading/>
         </Link>
         <SearchBar searchValue={searchValue} setSearchValue={setSearchValue}/>
         <Link to="/add">
           <button style={{backgroundColor: '#d30f0f', color: '#fff'}} type="submit" class="btn"><i class="bi bi-plus"></i></button>
+        </Link>
+      </div>
+      <div className="d-flex flex-row-reverse mb-6 me-5">
+        <Link to="/signup">
+          <button style={{backgroundColor: '#d30f0f', color: '#fff'}} type="submit" class="btn">Rejestracja</button>
         </Link>
       </div>
       <div className="row">

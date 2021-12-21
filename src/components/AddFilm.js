@@ -82,10 +82,10 @@ const AddFilm = () => {
             </div>
           </div>
 
-          <button style={{backgroundColor: '#d30f0f', color: '#fff', marginTop: '20px'}} type="submit" class="btn">Submit</button>
+          <button style={{backgroundColor: '#d30f0f', color: '#fff', marginTop: '20px'}} type="submit" class="btn">Dodaj</button>
 
           <Link to="/">
-            <button style={{marginTop: '20px', marginLeft: '20px'}} type="button" class="btn btn-secondary">Back</button>
+            <button style={{marginTop: '20px', marginLeft: '20px'}} type="button" class="btn btn-secondary">Powrót</button>
           </Link>
 
 
