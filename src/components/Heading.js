@@ -1,11 +1,13 @@
 import React from 'react';
-import './Heading.css'
+import './Heading.css';
+import logo from '../img/logo.png';
 
-const Heading = (props) => {
+const Heading = () => {
 
   return (
-		<div className='col-6'>
-			<h1>{props.heading}</h1>
+		<div className='d-flex align-items-center w-100 mt-4 mb-4'>
+      <img src={logo} alt='logo' width="100" height="100"/>
+			<h1>MovieCave</h1>
 		</div>
 	);
 }
