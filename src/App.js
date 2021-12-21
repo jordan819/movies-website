@@ -8,6 +8,7 @@ import Home from './components/Home';
 import Details from './components/Details';
 import AddFilm from './components/AddFilm';
 import SignUp from './components/SignUp';
+import SignIn from './components/SignIn';
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -21,6 +22,7 @@ const App = () => {
             <Route path="/details/:id" element={<Details/>} />
             <Route path="/add" element={<AddFilm/>} />
             <Route path="signup" element={<SignUp/>} />
+            <Route path="signin" element={<SignIn/>} />
           </Routes>
         </Router>
         <Footer/>

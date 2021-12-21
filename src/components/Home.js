@@ -64,7 +64,10 @@ const Home = () => {
         </Link>
       </div>
       <div className="d-flex flex-row-reverse mb-6 me-5">
-        <Link to="/signup">
+      <Link to="/signin">
+        <button style={{backgroundColor: '#d30f0f', color: '#fff'}} type="submit" class="btn">Logowanie</button>
+      </Link>
+      <Link to="/signup">
           <button style={{backgroundColor: '#d30f0f', color: '#fff'}} type="submit" class="btn">Rejestracja</button>
         </Link>
       </div>

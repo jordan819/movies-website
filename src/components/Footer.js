@@ -3,7 +3,7 @@ import './Footer.css'
 
 const Footer = () => {
   return(
-    <div className="d-flex footer border-top row">
+    <div className="d-flex footer border-top row mt-5">
       <div>
         <a style={{color: '#3b5998'}} href="https://www.facebook.com/" role="button">
           <i class="fab fa-facebook-f fa-lg"></i>
