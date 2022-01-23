@@ -63,18 +63,6 @@ const Details = () => {
 
       <img src={poster} alt='movie'/>
       <h2>Tytuł: {title}</h2>
-      <h2>Wydano: {released}</h2>
-      <h2>Czas trwania: {runtime}</h2>
-      <h2>Kategorie: {genre}</h2>
-      <h2>Reżyser: {director}</h2>
-      <h2>Aktorzy: {actors}</h2>
-      <h2>Fabuła: {plot}</h2>
-      <h2>Język: {language}</h2>
-      <h2>Kraj: {country}</h2>
-      <h2>Nagrody: {awards}</h2>
-      <h2>Ocena Metacritic: {metascore}</h2>
-      <h2>Ocena Imdb: {imdbRating}</h2>
-      <h2>Przychód: {boxOffice}</h2>
 
     </div>
   );
