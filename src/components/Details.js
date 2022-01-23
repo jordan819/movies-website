@@ -24,10 +24,10 @@ const Details = () => {
   const [boxOffice, setBoxOffice] = useState();
 
   const fetchMovie = async (id) => {
-    const url = 'http://www.omdbapi.com/?i=' + id + '&apikey=88693566';
+    const url = 'https://pr-movies.herokuapp.com/api/movies/'+id;// 'http://www.omdbapi.com/?i=' + id + '&apikey=88693566';
     let response = await fetch(url);
     let responseJson = await response.json();
-
+/*
     setTitle(responseJson.Title);
     setReleased(responseJson.Released);
     setRuntime(responseJson.Runtime);
@@ -42,6 +42,9 @@ const Details = () => {
     setMetascore(responseJson.Metascore);
     setImdbRating(responseJson.imdbRating);
     setBoxOffice(responseJson.BoxOffice);
+*/
+
+  setPoster(responseJson.image);
 
   }
 

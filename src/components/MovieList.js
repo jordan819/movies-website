@@ -9,7 +9,7 @@ const MovieList = (props) => {
       {props.movies.map((movie, index) => (
         <div className="d-flex justify-content-center m-3 col">
 
-          <Link to={`/details/${movie.imdbID}`}>
+          <Link to={`/details/${movie.id}`}>
             <div class="img__wrap">
               <img class="img__img" src={movie.image} alt='movie' width="300" height="400"/>
               <p class="img__description">{movie.content}</p>
