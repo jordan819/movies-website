@@ -9,9 +9,9 @@ import { Link } from "react-router-dom";
 const Home = () => {
 
   const [movies, setMovies] = useState([]);
-  const [moviesDescription, setMoviesDescription] = useState([]);
+  // const [moviesDescription, setMoviesDescription] = useState([]);
   const [searchValue, setSearchValue] = useState('movie');
-
+/*
   const getMoviesDescriptionRequest = async (movies) => {
     let descriptions = [];
 
@@ -25,25 +25,28 @@ const Home = () => {
 
     setMoviesDescription(descriptions);
   };
+*/
+
 
   useEffect(() => {
     const getMoviesRequest = async (searchValue) => {
-      const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=88693566`;
+      const url = 'https://pr-movies.herokuapp.com/api/movies'; //`http://www.omdbapi.com/?s=${searchValue}&apikey=88693566`;
       const response = await fetch(url);
       const responseJson = await response.json();
 
-      if (responseJson.Search) {
+      if (responseJson) {
 
         let validatedJson = [];
 
+        // TODO: sprawdzanie czy link do zdjęcia faktycznie zawiera zdjęcie
         // films with no poster available will not be displayed
-        for (let i=0; i<responseJson.Search.length; i++) {
-          if (responseJson.Search[i].Poster !== 'N/A') {
-            validatedJson.push(responseJson.Search[i]);
+        for (let i=0; i<responseJson.length; i++) {
+          if (responseJson[i].image) {
+            validatedJson.push(responseJson[i]);
           }
         }
 
-        getMoviesDescriptionRequest(validatedJson);
+        //getMoviesDescriptionRequest(validatedJson);
 
         setMovies(validatedJson);
       }
@@ -72,7 +75,7 @@ const Home = () => {
         </Link>
       </div>
       <div className="row">
-        <MovieList movies={movies} descriptions={moviesDescription}/>
+        <MovieList movies={movies}/>
       </div>
     </div>
   );

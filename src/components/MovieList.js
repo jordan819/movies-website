@@ -11,8 +11,8 @@ const MovieList = (props) => {
 
           <Link to={`/details/${movie.imdbID}`}>
             <div class="img__wrap">
-              <img class="img__img" src={movie.Poster} alt='movie' width="300" height="400"/>
-              <p class="img__description">{props.descriptions[index]}</p>
+              <img class="img__img" src={movie.image} alt='movie' width="300" height="400"/>
+              <p class="img__description">{movie.content}</p>
             </div>
           </Link>
 
