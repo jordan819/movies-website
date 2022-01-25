@@ -10,9 +10,16 @@ import AddFilm from './components/AddFilm';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+
+import { isExpired } from "react-jwt";
 
 const App = () => {
+
+  function RequireAuth({ children, redirectTo }) {
+    let isLogged = !isExpired(localStorage.getItem('token'));;
+    return isLogged ? children : <Navigate to={redirectTo} />;
+  }
 
   return (
       <div>
@@ -20,7 +27,13 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/details/:id" element={<Details/>} />
-            <Route path="/add" element={<AddFilm/>} />
+            <Route
+                path="/add"
+                element={
+                  <RequireAuth redirectTo="/signin">
+                      <AddFilm/>
+                  </RequireAuth>
+                }/>
             <Route path="signup" element={<SignUp/>} />
             <Route path="signin" element={<SignIn/>} />
           </Routes>

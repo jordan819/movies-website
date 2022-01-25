@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
 
-  // const user = decodeToken(localStorage.getItem('token'));
+  const user = decodeToken(localStorage.getItem('token'));
   const isNotLoggedIn = isExpired(localStorage.getItem('token'));
 
   const [movies, setMovies] = useState([]);
@@ -40,6 +40,7 @@ const Home = () => {
     getMoviesRequest(searchValue);
   }, [searchValue]);
 
+  //{user && <h4 style={{float: 'left'}}>User: {user.name}</h4>}
   return (
     <div>
       <div style={{paddingLeft: '40px', paddingRight: '50px'}} className='d-flex align-items-center w-100 mt-4'>
