@@ -54,17 +54,17 @@ const AddFilm = () => {
         <form>
           <div class="form-group w-50 mt-4 mb-4">
             <label for="titleInput">Tytuł filmu</label>
-            <input type="text" class="form-control" id="titleInput" placeholder="Tytuł" onChange={(event) => setTitle(event.target.value)} value={title}/>
+            <textarea rows="1" class="form-control" id="titleInput" placeholder="Tytuł" onChange={(event) => setTitle(event.target.value)} value={title}/>
           </div>
 
           <div class="form-group w-50  mt-4 mb-4">
             <label for="directorInput">Opis</label>
-            <input type="text" class="form-control" id="descriptionInput" placeholder="Opis" onChange={(event) => setDescription(event.target.value)} value={description}/>
+            <textarea rows="3" class="form-control" id="descriptionInput" placeholder="Opis" onChange={(event) => setDescription(event.target.value)} value={description}/>
           </div>
 
           <div class="form-group w-50  mt-4 mb-4">
             <label for="actorsInput">Zdjęcie</label>
-            <input type="text" class="form-control" id="imageUrlInput" placeholder="Link do zdjęcia" onChange={(event) => setImageUrl(event.target.value)} value={imageUrl}/>
+            <textarea rows="1" class="form-control" id="imageUrlInput" placeholder="Link do zdjęcia" onChange={(event) => setImageUrl(event.target.value)} value={imageUrl}/>
           </div>
         </form>
         <button onClick={addFilm} style={{backgroundColor: '#d30f0f', color: '#fff', marginTop: '20px'}} type="submit" class="btn">Dodaj</button>
