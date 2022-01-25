@@ -6,9 +6,6 @@ const axios = require('axios');
 
 const SignIn = () => {
 
-  // localStorage.setItem('token', false);
-  // console.log(localStorage.getItem('token'));
-
   const [login, setLogin] = useState('');
   const [pass, setPass] = useState('');
 
