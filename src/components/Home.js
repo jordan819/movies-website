@@ -3,34 +3,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import MovieList from './MovieList';
 import Heading from './Heading';
 import SearchBar from './SearchBar';
+import { isExpired, decodeToken  } from "react-jwt";
 
 import { Link } from "react-router-dom";
 
 const Home = () => {
 
+  // const user = decodeToken(localStorage.getItem('token'));
+  const isNotLoggedIn = isExpired(localStorage.getItem('token'));
+
   const [movies, setMovies] = useState([]);
-  // const [moviesDescription, setMoviesDescription] = useState([]);
   const [searchValue, setSearchValue] = useState('movie');
-/*
-  const getMoviesDescriptionRequest = async (movies) => {
-    let descriptions = [];
-
-    for (let i=0; i<movies.length; i++) {
-      let id = movies[i].imdbID;
-      let url = 'http://www.omdbapi.com/?i=' + id + '&apikey=88693566';
-      let response = await fetch(url);
-      let responseJson = await response.json();
-      descriptions.push(responseJson.Plot);
-    }
-
-    setMoviesDescription(descriptions);
-  };
-*/
 
 
   useEffect(() => {
     const getMoviesRequest = async (searchValue) => {
-      const url = 'https://pr-movies.herokuapp.com/api/movies'; //`http://www.omdbapi.com/?s=${searchValue}&apikey=88693566`;
+      const url = 'https://pr-movies.herokuapp.com/api/movies';
       const response = await fetch(url);
       const responseJson = await response.json();
 
@@ -45,9 +33,6 @@ const Home = () => {
             validatedJson.push(responseJson[i]);
           }
         }
-
-        //getMoviesDescriptionRequest(validatedJson);
-
         setMovies(validatedJson);
       }
 
