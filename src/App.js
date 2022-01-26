@@ -9,6 +9,7 @@ import Details from './components/Details';
 import AddFilm from './components/AddFilm';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
+import NotFound from './components/NotFound';
 
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
@@ -30,6 +31,7 @@ const App = () => {
       <div>
         <Router>
           <Routes>
+            <Route path='*' element={<NotFound/>} />
             <Route path="/" element={<Home/>}/>
             <Route path="/details/:id" element={<Details/>} />
             <Route
