@@ -25,13 +25,12 @@ const Home = () => {
 
         let validatedJson = [];
 
-        // TODO: sprawdzanie czy link do zdjęcia faktycznie zawiera zdjęcie
-        // films with no poster available will not be displayed
         for (let i=0; i<responseJson.length; i++) {
-          if (responseJson[i].image) {
+          if (responseJson[i].image && !validatedJson.some(v => (v.image === responseJson[i].image))) {
             validatedJson.push(responseJson[i]);
           }
         }
+
         setMovies(validatedJson);
       }
 
