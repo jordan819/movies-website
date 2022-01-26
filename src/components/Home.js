@@ -3,47 +3,32 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import MovieList from './MovieList';
 import Heading from './Heading';
 import SearchBar from './SearchBar';
+import { isExpired  } from "react-jwt";
 
 import { Link } from "react-router-dom";
 
 const Home = () => {
 
+  let isNotLoggedIn = isExpired(localStorage.getItem('token'));
+
   const [movies, setMovies] = useState([]);
-  const [moviesDescription, setMoviesDescription] = useState([]);
   const [searchValue, setSearchValue] = useState('movie');
-
-  const getMoviesDescriptionRequest = async (movies) => {
-    let descriptions = [];
-
-    for (let i=0; i<movies.length; i++) {
-      let id = movies[i].imdbID;
-      let url = 'http://www.omdbapi.com/?i=' + id + '&apikey=88693566';
-      let response = await fetch(url);
-      let responseJson = await response.json();
-      descriptions.push(responseJson.Plot);
-    }
-
-    setMoviesDescription(descriptions);
-  };
 
   useEffect(() => {
     const getMoviesRequest = async (searchValue) => {
-      const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=88693566`;
+      const url = 'https://pr-movies.herokuapp.com/api/movies';
       const response = await fetch(url);
       const responseJson = await response.json();
 
-      if (responseJson.Search) {
+      if (responseJson) {
 
         let validatedJson = [];
 
-        // films with no poster available will not be displayed
-        for (let i=0; i<responseJson.Search.length; i++) {
-          if (responseJson.Search[i].Poster !== 'N/A') {
-            validatedJson.push(responseJson.Search[i]);
+        for (let i=0; i<responseJson.length; i++) {
+          if (responseJson[i].image && !validatedJson.some(v => (v.image === responseJson[i].image))) {
+            validatedJson.push(responseJson[i]);
           }
         }
-
-        getMoviesDescriptionRequest(validatedJson);
 
         setMovies(validatedJson);
       }
@@ -63,16 +48,21 @@ const Home = () => {
           <button style={{backgroundColor: '#d30f0f', color: '#fff'}} type="submit" class="btn"><i class="bi bi-plus"></i></button>
         </Link>
       </div>
+
       <div className="d-flex flex-row-reverse mb-6 me-5">
-      <Link to="/signin">
-        <button style={{backgroundColor: '#d30f0f', color: '#fff'}} type="submit" class="btn">Logowanie</button>
-      </Link>
-      <Link to="/signup">
-          <button style={{backgroundColor: '#d30f0f', color: '#fff'}} type="submit" class="btn">Rejestracja</button>
-        </Link>
+        {isNotLoggedIn && <Link to="/signin">
+          <button style={{backgroundColor: '#d30f0f', color: '#fff'}} type="submit" class="btn">Logowanie</button>
+        </Link>}
+
+        {isNotLoggedIn && <Link to="/signup">
+            <button style={{backgroundColor: '#d30f0f', color: '#fff'}} type="submit" class="btn">Rejestracja</button>
+          </Link>}
+
+        {!isNotLoggedIn && <a href="/" onClick={() => localStorage.removeItem('token')} style={{backgroundColor: '#d30f0f', color: '#fff'}} type="submit" class="btn">Wyloguj</a>}
       </div>
+
       <div className="row">
-        <MovieList movies={movies} descriptions={moviesDescription}/>
+        <MovieList movies={movies}/>
       </div>
     </div>
   );

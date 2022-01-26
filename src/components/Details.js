@@ -9,39 +9,16 @@ const Details = () => {
   const {id} = useParams();
 
   const [title, setTitle] = useState();
-  const [released, setReleased] = useState();
-  const [runtime, setRuntime] = useState();
-  const [genre, setGenre] = useState();
-  const [director, setDirector] = useState();
-  const [actors, setActors] = useState();
-  const [plot, setPlot] = useState();
-  const [language, setLanguage] = useState();
-  const [country, setCountry] = useState();
-  const [awards, setAwards] = useState();
+  const [content, setContent] = useState();
   const [poster, setPoster] = useState();
-  const [metascore, setMetascore] = useState();
-  const [imdbRating, setImdbRating] = useState();
-  const [boxOffice, setBoxOffice] = useState();
 
   const fetchMovie = async (id) => {
-    const url = 'http://www.omdbapi.com/?i=' + id + '&apikey=88693566';
+    const url = 'https://pr-movies.herokuapp.com/api/movies/'+id;
     let response = await fetch(url);
     let responseJson = await response.json();
-
-    setTitle(responseJson.Title);
-    setReleased(responseJson.Released);
-    setRuntime(responseJson.Runtime);
-    setGenre(responseJson.Genre);
-    setDirector(responseJson.Director);
-    setActors(responseJson.Actors);
-    setPlot(responseJson.Plot);
-    setLanguage(responseJson.Language);
-    setCountry(responseJson.Country);
-    setAwards(responseJson.Awards);
-    setPoster(responseJson.Poster);
-    setMetascore(responseJson.Metascore);
-    setImdbRating(responseJson.imdbRating);
-    setBoxOffice(responseJson.BoxOffice);
+    setTitle(responseJson.title);
+    setContent(responseJson.content);
+    setPoster(responseJson.image);
 
   }
 
@@ -50,28 +27,18 @@ const Details = () => {
   }, [id]);
 
   return(
-    <div style={{textAlign: 'center'}}>
+    <div style={{textAlign: 'center', marginLeft: 120, marginRight: 120}} >
 
       <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }} className='d-flex align-items-center w-100 mt-4 mb-4'>
         <Heading/>
       </Link>
 
-      <h2>Details</h2>
-
-      <img src={poster} alt='movie'/>
-      <h2>Tytuł: {title}</h2>
-      <h2>Wydano: {released}</h2>
-      <h2>Czas trwania: {runtime}</h2>
-      <h2>Kategorie: {genre}</h2>
-      <h2>Reżyser: {director}</h2>
-      <h2>Aktorzy: {actors}</h2>
-      <h2>Fabuła: {plot}</h2>
-      <h2>Język: {language}</h2>
-      <h2>Kraj: {country}</h2>
-      <h2>Nagrody: {awards}</h2>
-      <h2>Ocena Metacritic: {metascore}</h2>
-      <h2>Ocena Imdb: {imdbRating}</h2>
-      <h2>Przychód: {boxOffice}</h2>
+      <img src={poster} alt='movie' onError={({ currentTarget }) => {
+                                                currentTarget.onerror = null; // prevents looping
+                                                currentTarget.src="https://image.shutterstock.com/image-vector/photo-coming-soon-vector-image-600w-1809858361.jpg";
+                                              }} width="300" height="400"/>
+      <h1>{title}</h1>
+      <h2>{content}</h2>
 
     </div>
   );
