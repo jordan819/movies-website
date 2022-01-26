@@ -21,6 +21,11 @@ const App = () => {
     return isLogged ? children : <Navigate to={redirectTo} />;
   }
 
+  function NotRequireAuth({ children, redirectTo }) {
+    let expired = isExpired(localStorage.getItem('token'));;
+    return expired ? children : <Navigate to={redirectTo} />;
+  }
+
   return (
       <div>
         <Router>
@@ -34,8 +39,23 @@ const App = () => {
                       <AddFilm/>
                   </RequireAuth>
                 }/>
-            <Route path="signup" element={<SignUp/>} />
-            <Route path="signin" element={<SignIn/>} />
+
+            <Route
+                path="/signup"
+                element={
+                  <NotRequireAuth redirectTo="/">
+                      <SignUp/>
+                  </NotRequireAuth>
+                }/>
+
+            <Route
+                path="/signin"
+                element={
+                  <NotRequireAuth redirectTo="/">
+                      <SignIn/>
+                  </NotRequireAuth>
+                }/>
+
           </Routes>
         </Router>
         <Footer/>
