@@ -34,9 +34,9 @@ const Details = () => {
       </Link>
 
       <img src={poster} alt='movie' onError={({ currentTarget }) => {
-currentTarget.onerror = null; // prevents looping
-currentTarget.src="https://image.shutterstock.com/image-vector/photo-coming-soon-vector-image-600w-1809858361.jpg";
-}} alt='movie' width="300" height="400"/>
+                                                currentTarget.onerror = null; // prevents looping
+                                                currentTarget.src="https://image.shutterstock.com/image-vector/photo-coming-soon-vector-image-600w-1809858361.jpg";
+                                              }} width="300" height="400"/>
       <h1>{title}</h1>
       <h2>{content}</h2>
 

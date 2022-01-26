@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import Heading from './Heading';
-import { isExpired, decodeToken  } from "react-jwt";
 const axios = require('axios');
 
 const SignIn = () => {

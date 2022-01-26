@@ -3,13 +3,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import MovieList from './MovieList';
 import Heading from './Heading';
 import SearchBar from './SearchBar';
-import { isExpired, decodeToken  } from "react-jwt";
+import { isExpired  } from "react-jwt";
 
 import { Link } from "react-router-dom";
 
 const Home = () => {
 
-  const user = decodeToken(localStorage.getItem('token'));
   let isNotLoggedIn = isExpired(localStorage.getItem('token'));
 
   const [movies, setMovies] = useState([]);
