@@ -1,6 +1,7 @@
 import React, { useState, useMyHook, useRef } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Heading from './Heading';
+import validator from 'validator';
 const axios = require('axios');
 
 const SignUp = () => {
@@ -10,7 +11,11 @@ const SignUp = () => {
   const [pass, setPass] = useState('');
   const [passRep, setPassRep] = useState('');
 
-  const navigate = useNavigate();
+  const [errorLogin, setErrorLogin] = useState();
+  const [errorEmail, setErrorEmail] = useState();
+  const [errorPassword, setErrorPassword] = useState();
+
+  const [info, setInfo] = useState();
 
   const signUpUser = () => {
     console.log('login: ' + login);
@@ -18,10 +23,36 @@ const SignUp = () => {
     console.log('pass: ' + pass);
     console.log('passRep: ' + passRep);
 
-    if(pass !== passRep) {
-      console.log('Hasła są różne!');
+    if (login.trim() === '') {
+      setErrorLogin('Wymagany login!');
       return;
-    };
+    } else {
+      setErrorLogin();
+    }
+
+    if (email.trim() === '') {
+      setErrorEmail('Wymagany adres email!');
+      return;
+    } else if (!validator.isEmail(email)) {
+      setErrorEmail('Adres email niepoprawny!')
+      return;
+    } else {
+      setErrorEmail();
+    }
+
+    if (pass === '') {
+      setErrorPassword('Wymagane hasło!');
+      return;
+    } else {
+      setErrorPassword();
+    }
+
+    if (pass !== passRep) {
+      setErrorPassword('Podane hasła są różne!');
+      return;
+    } else {
+      setErrorPassword();
+    }
 
     axios({
       method: 'post',
@@ -33,9 +64,10 @@ const SignUp = () => {
       }
     }).then((response) => {
       console.log(response);
-      //useNavigate("/");
+      setInfo('Rejestracja przebiegła pomyślnie :)');
     }).catch((error) => {
-      console.log('Mam Error: ' + error);
+      console.log(error);
+      setErrorPassword('Podany login lub e-mail zajęty!');
     })
   };
 
@@ -51,11 +83,17 @@ const SignUp = () => {
       <div class="form-group w-50 mt-4 mb-4">
         <label for="loginInput">Login</label>
         <input type="text" class="form-control" id="loginInput" placeholder="Login" onChange={(event) => setLogin(event.target.value)} value={login}/>
+        {errorLogin &&
+          <div className="alert alert-danger">{errorLogin}</div>
+        }
       </div>
 
       <div class="form-group w-50 mt-4 mb-4">
         <label for="emailInput">E-mail</label>
-        <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" onChange={(event) => setEmail(event.target.value)} value={email}/>
+        <input aria-describedby="emailHelp" type="email" class="form-control" id="emailInput" placeholder="name@example.com" onChange={(event) => setEmail(event.target.value)} value={email}/>
+        {errorEmail &&
+          <div className="alert alert-danger">{errorEmail}</div>
+        }
       </div>
 
       <div class="form-group w-50 mt-4 mb-4">
@@ -66,6 +104,12 @@ const SignUp = () => {
       <div class="form-group w-50 mt-4 mb-4">
         <label for="passwordConfirmInput">Potwerdź hasło</label>
         <input type="password" class="form-control" id="passwordConfirmInput" placeholder="*****" onChange={(event) => setPassRep(event.target.value)} value={passRep}/>
+        {errorPassword &&
+          <div className="alert alert-danger">{errorPassword}</div>
+        }
+        {info &&
+          <div className="alert alert-info">{info}</div>
+        }
       </div>
 
       <button style={{backgroundColor: '#d30f0f', color: '#fff', marginTop: '20px'}} type="submit" class="btn" onClick={signUpUser}>Zarejestruj mnie</button>
